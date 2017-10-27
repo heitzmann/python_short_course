@@ -34,20 +34,25 @@ x_fit = numpy.array([0, 2.0])
 y_sm_fit = c_sm[0] * x_fit + c_sm[1]
 y_mm_fit = c_mm[0] * x_fit + c_mm[1]
 
-fig, ax = pyplot.subplots(1, 1, figsize=(5.5, 4)) # rows × cols, size in inches
+fig, ax = pyplot.subplots(1, 2, figsize=(8.5, 4)) # rows × cols, size in inches
 
-ax.plot(x_exp, y_sm, 'o', label='Single-mode data')
-ax.plot(x_fit, y_sm_fit, label='y = {0[0]:.1f}x + {0[1]:.1f}'.format(c_sm))
+ax[0].plot(x_exp, y_sm, 'o', label='Single-mode data')
+ax[0].plot(x_fit, y_sm_fit, label='y = {0[0]:.1f}x + {0[1]:.1f}'.format(c_sm))
 
-ax.plot(x_exp, y_mm, 's', label='Multimode data')
-ax.plot(x_fit, y_mm_fit, '--', label='y = {0[0]:.1f}x + {0[1]:.1f}'.format(c_mm))
+ax[1].plot(x_exp, y_mm, 's', label='Multimode data')
+ax[1].plot(x_fit, y_mm_fit, '--', label='y = {0[0]:.1f}x + {0[1]:.1f}'.format(c_mm))
 
-ax.legend()
+#for a in ax:
+#    a.legend()
+#    a.set_xlabel('Length (cm)')
+#    a.set_ylabel('Insertion Loss (dB)')
+#    a.grid()
 
-ax.set_xlabel('Length (cm)')
-ax.set_ylabel('Insertion Loss (dB)')
-
-ax.grid()
+for i in range(len(ax)):
+    ax[i].legend()
+    ax[i].set_xlabel('Length (cm)')
+    ax[i].set_ylabel('Insertion Loss (dB)')
+    ax[i].grid()
 
 # Other useful formats: svg, eps, png
 fig.savefig('figure.pdf')

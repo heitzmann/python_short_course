@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Python: Part 1</title>
+		<meta charset="utf-8">
+		<style>
+			@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+			@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+			@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+			body { font-family: 'Droid Serif'; }
+			h1, h2, h3 {
+				font-family: 'Yanone Kaffeesatz';
+				font-weight: normal;
+			}
+			.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+			.small { font-size: 80%; }
+			.highlight { color: red; }
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+
+class: center, middle
+
+# Python Short Course
+
+## Part 1: Introduction
+
+*Lucas H. Gabrielli*
+
+.small[[lucashg@fee.unicamp.br](mailto:lucashg@fee.unicamp.br)]
+
+---
+
+# Agenda
+
+1. REPL and scripts
+1. Data types
+1. Conditionals
+1. Functions
+1. Loops
+1. Classes and objects
+
+---
+
+# REPL
+
+*Read-eval-print loop* (REPL): interactive Python interpreter
+
+```python
+>>> 1 + 2
+3
+>>> 5 / 3
+1.6666666666666667
+```
+
+Try out a few operators:
+
+* `2 ** 0.5`
+* `1j ** 2`
+* `'Hello' + ' World!'`
+
+???
+
+Prints the return value of the last expression
+
+Integer division and modulo
+
+Difference between python 2 and 3 regarding division
+
+--
+
+There are more user-friendly Python REPLs than the default, such as *IPython* (https://ipython.readthedocs.io/):
+
+* syntax highlighting
+* tab completion
+* easy access to documentation
+* input history
+* other *magics*
+
+---
+
+# Assigning Variables
+
+```python
+x = 1
+y = 2
+z = x + y
+z
+```
+--
+```python
+x = -1
+z
+```
+--
+```python
+z = z + 3
+```
+--
+```python
+z += 3
+```
+--
+```python
+a = 'word'
+b = a + 's'
+c = 2 * a
+```
+--
+```python
+x = y = 0
+```
+
+---
+
+# Scripts
+
+* Text files (usually with the `.py` extension)
+* Run full programs with or without user interaction
+* No values are printed by default: use the `print` function
+
+???
+
+Getting help: `help(print)` on the REPL
+
+--
+
+Write and run a script with:
+
+```python
+for i in [0, 1, 2, 3]:
+	print(i)
+```
+
+???
+
+Modify the script to print 0, 2, 4, and 6
+
+--
+
+#### Exercise:
+
+Write a script to find the roots of a quadratic polynomial and print them.
+Try a few different coefficients to understand the limitations of your program.
+
+```python
+# This line is a comment. Comments are good.
+# Find the roots of the polynomial P(x) = ax² + bx + c
+
+a = 1
+b = 5
+c = 4
+
+# First calculate Δ:
+delta = ...
+```
+
+---
+
+# Jupyter Notebook
+
+Create documents with live code, equations and visualizations straight from the browser.
+
+Works with Python, R, Julia, Ruby, Scala...
+
+.center[http://jupyter.org/]
+
+Jupyter notebooks will be used in Part 2.
+
+---
+
+# Data Types
+
+* Python has quite powerful and *efficient* built-in data types.
+* Information about the type can be found with the function `type`:
+
+```python
+type(1)
+x = 1 / 2
+type(x)
+```
+---
+
+# Numerical types
+
+* bool: `True`, `False`
+* int: `0`, `-2`, `0x1f`, `0b11`, `0o17`
+* float: `0.0`, `-0.5`, `1e2`, `-.9`
+* complex: `1j`, `0.9e-2j`
+
+*Feature:* ints do not overflow!
+```python
+>>> 2 ** 256
+115792089237316195423570985008687907853269984665640564039457584007913129639936
+```
+
+Type conversion:
+```python
+x = 42
+float(x)
+int(3.1 / 3)
+complex(3, 0.1)
+```
+
+---
+
+layout: true
+
+# Sequence types
+
+---
+
+## List: ordered collection
+
+```python
+a = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]
+type(a)
+```
+--
+```python
+a[1]
+```
+--
+```python
+len(a)
+a[len(a) - 1]
+a[-1]
+```
+--
+```python
+a[2] = "two"
+a[3] = -2 * a[0] + a[1]
+```
+--
+```python
+a[1:3]
+a[3:]
+a[:4]
+a[1:6:2]
+```
+???
+
+Try:
+
+```python
+a[:]
+a[::-1]
+```
+
+---
+
+## Tuple: immutable ordered collection
+
+```python
+b = (1, 1, 2, 3)
+b[0] = 0
+```
+
+--
+
+## Operations
+```python
+['a', 'b', 'c'] + ['d', 'e']
+a[:3] + a[4:]
+```
+--
+```python
+[1, 2, 3] * 3
+```
+???
+```python
+[(1, 2)] * 2
+```
+--
+```python
+0 in b
+'one' not in a
+```
+
+---
+
+layout: false
+
+# Text sequence type
+
+```python
+a = 'Double quoted "text" in single quotes'
+b = "Single quoted 'text' in double quotes'
+```
+???
+Test `'This' is "This"`
+--
+```python
+>>> wow = '''Triple
+... quoted
+...   text
+...     is neat!'''
+>>> wow
+'Triple\nquoted\n  text\n    is neat!'
+>>> print(wow)
+Triple
+quoted
+  text
+    is neat!
+```
+
+---
+
+layout: true
+
+# Conditionals
+
+---
+
+```python
+a = [1, 3, 5]
+i = 2
+if a[i] == 3:
+	print("Found 3")
+print("Done testing")
+```
+???
+Use of tabs or spaces to define blocks
+
+---
+
+```python
+a = [1, 3, 5]
+i = 2
+if a[i] == 3:
+	print("Found 3")
+else:
+	print("Not a 3")
+print("Done testing")
+```
+
+---
+
+```python
+a = [1, 3, 5]
+i = 2
+if a[i] == 3:
+	print("Found 3")
+elif:
+	print("Not a 3, but it is there... somewhere.")
+else:
+	print("No 3 in a")
+print("Done testing")
+```
+
+--
+
+#### Exercise:
+Modify your root-finding script to handle degenerate cases, e.g. `a = 0`.
+
+???
+
+What if `a = b = 0`?
+
+---
+
+layout: true
+
+# Functions
+
+---
+
+```python
+def greet(name):
+	print(name)
+	s = 'Hello ' + name
+	return s
+
+greeting = greet('World')
+print(greeting)
+```
+---
+
+```python
+def greet(name='Kitty'):
+	print(name)
+	s = 'Hello ' + name
+	return s
+
+greeting = greet('World')
+print(greeting)
+print(greet())
+```
+
+---
+
+```python
+def greet(name='Kitty'):
+	print(name)
+	s = 'Hello ' + name
+	return s
+
+greeting = greet('World')
+print(greeting)
+print(greet())
+```
+
+#### Exercise:
+Define a function to find the roots of a quadratic polynomial.
+It should return all solutions in a sequence.
+
+```python
+def roots(a, b, c):
+	# Return the roots of the polynomial P(x) = ax² + bx  + c
+	...
+
+sol = roots(1, 5, 4)
+print(sol)
+```
+
+???
+
+Well-behaved functions always return the same type.
+
+---
+
+layout: false
+
+# String formatting
+
+```python
+a = 1 / 3
+b = 2e-3
+s = 'a = ' + str(a) + '\nb = ' + str(b)
+print(s)
+```
+
+--
+
+`Format` method
+```python
+'a = {} | b = {}'.format(a, b)
+'b = {1} | a = {0}'.format(a, b)
+'a = {0} = {0:.3g} | b = {1} = {1:.1e}'.format(a, b)
+```
+
+???
+
+C-style `printf` formating codes.
+
+--
+
+F-strings
+```python
+f'a = {a} | b = {b} | c = {3 * a - b}'
+```
+
+???
+
+```python
+f'a = {a:.3g} | b = {b:.1e}'
+```
+
+Old-style `%` formating.
+
+--
+
+.center[*Now go back and improve your script output!*]
+
+---
+
+# Dict: mapping type
+
+```python
+d = {'one': 1, 'two': 2, 'three': 3}
+d['one']
+d['four']
+```
+???
+`'four' in d`
+--
+```python
+d['four'] = 4
+d[4] = 'four'
+```
+--
+```python
+key = [1, 2, 3]
+d[key] = 'Nope!'
+```
+???
+Keys must be hashable: tuple works
+--
+Dictionaries are used everywhere internally in Python, so they are memory-efficient and well optimized.
+
+---
+
+# Unpacking
+
+It's possible to separate the items from a sequence during assignment:
+
+```python
+a, b = (1, 2)
+x1, x2 = roots(2, 1, 0)
+```
+???
+
+a, b = b, a
+
+--
+
+# Function Arguments
+
+```python
+args = [2, 1, 0]
+roots(*args)
+bc = [1, 0]
+roots(2, *bc)
+```
+--
+```python
+roots(2, c=0, b=1)
+```
+--
+```python
+kwargs = {'a': 2, 'c': 0}
+kwargs['b'] = 1
+roots(**kwargs)
+```
+
+---
+
+# Loops
+
+```python
+x = 100
+while x > 1:
+	print(x)
+	x /= 2
+print(f'Exited on {x}')
+```
+--
+```python
+a = [1, 2, 4, 8, 16]
+b = []
+for x in a:
+	b.append(2 * x)
+print(b)
+```
+--
+#### Exercise:
+Write a function that returns the factorial of a positive integer.
+
+???
+
+Solution with `for` and `range`
+
+--
+
+## Comprehension
+
+```python
+c = [2 * x for x in range(10)]
+```
+
+???
+
+```python
+c = [2 * x for x in range(10) if x % 2 == 0]
+```
+
+---
+
+# Collatz Conjecture
+
+Let a₀ be any positive integer.
+The sequence a₁, a₂, ... is constructed as follows:
+
+* a<sub>n+1</sub> = a<sub>n</sub> / 2, if a<sub>n</sub> is even
+* a<sub>n+1</sub> = 3a<sub>n</sub> + 1, otherwise
+
+The conjecture is that the sequence always reaches the value 1 for any choice of a₀.
+
+--
+
+#### Exercise:
+
+Create a function `collatzlen(n)` that calculates the number of steps required to reach the end of the sequence (value 1) for a given starting value `n`.
+
+Tests:
+
+* `collatzlen(1) == 0`
+* `collatzlen(2) == 1`
+* `collatzlen(3) == 7`
+* `collatzlen(4) == 2`
+* `collatzlen(5) == 5`
+* `collatzlen(9) == 19`
+
+---
+
+# Classes and Objects
+
+Classes can be understood as *complex* types.
+They describe the data and behaviour of their instance objects.
+
+In fact, *everything* in Python is an object!
+To access the attributes of an object we use the "." (dot) operator:
+
+```python
+s = 'My sample tExT'
+s.upper()
+i = s.find('l')
+s[i:]
+```
+
+Use `dir(...)` to list the attributes of any object.
+
+```python
+dir(s)
+dir(i)
+```
+
+There is no need to name variables to access an objects attributes:
+
+```python
+(3 - 4j).conjugate()
+'Format is {} of my methods'.format('one')
+```
+
+---
+
+# Modules
+
+Modules contain definitions and statements that can be imported into other programs.
+
+Python includes several built-in modules.
+Look into the documentation before reinventing the wheel.
+
+#### Example:
+
+Given a list of fruits, pick a random combination with `num` different choices.
+
+```python
+import random
+import itertools
+
+def fruit_chooser(fruits, num):
+	choices = list(itertools.combinations(fruits, num))
+	index = random.randint(0, len(choices) - 1)
+	print('The fruits {} were picked among {} possible choices.'
+	      .format(choices[index], len(choices)))
+
+fruit_list = ['apple', 'banana', 'orange', 'papaya']
+fruit_chooser(fruit_list, 2)
+```
+???
+
+Check out `turtle`
+
+---
+
+# Practice at Home
+
+Implement the *Cows and Bulls* game.
+
+A secret 4-digit number is randomly chosen with no repeating digits.
+Each turn the player guesses the number and the computer informs how many digits are correct but in the wrong position (*cows*) and how many are correct and in the right position (*bulls*), until the player guesses the correct number.
+
+For example:
+
+* Secret number: 9845
+* Player guess: 5804
+* Reply: 1 bull, 2 cows
+
+*Tip:* take a look at the `input` function to ask for the player guess.
+
+---
+
+class: center, middle
+
+# End of Part 1
+
+		</textarea>
+		<script src="https://remarkjs.com/downloads/remark-latest.min.js">
+		</script>
+		<script>
+			var slideshow = remark.create();
+		</script>
+	</body>
+</html>
